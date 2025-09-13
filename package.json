@@ -1,0 +1,37 @@
+{
+  "name": "basic-saas-platform",
+  "version": "1.0.0",
+  "description": "A production-ready MVP SaaS starter with Angular 20 (SSR) and .NET 8 Minimal API",
+  "scripts": {
+    "dev:web": "cd apps/web && npm run serve:ssr:web",
+    "dev:api": "cd apps/api && dotnet run",
+    "build:web": "cd apps/web && npm run build",
+    "build:api": "cd apps/api && dotnet build",
+    "build": "npm run build:web && npm run build:api",
+    "install:web": "cd apps/web && npm install",
+    "install:api": "cd apps/api && dotnet restore",
+    "install:all": "npm run install:web && npm run install:api",
+    "test:web": "cd apps/web && npm test",
+    "test:api": "cd apps/api && dotnet test",
+    "lint:web": "cd apps/web && npm run lint",
+    "clean": "rm -rf apps/web/dist apps/web/.angular apps/api/bin apps/api/obj"
+  },
+  "keywords": [
+    "saas",
+    "angular",
+    "dotnet",
+    "supabase",
+    "stripe",
+    "typescript",
+    "tailwindcss"
+  ],
+  "author": "Hardik Patel",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "workspaces": [
+    "apps/web"
+  ]
+}
