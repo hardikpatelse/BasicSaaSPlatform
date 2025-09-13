@@ -1,0 +1,42 @@
+name: Deploy API to Azure App Service
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'apps/api/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'apps/api/**' ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore apps/api/api.csproj
+      
+    - name: Build application
+      run: dotnet build apps/api/api.csproj --configuration Release --no-restore
+      
+    - name: Test application
+      run: dotnet test apps/api/api.csproj --configuration Release --no-build --verbosity normal
+      
+    - name: Publish application
+      run: dotnet publish apps/api/api.csproj --configuration Release --no-build --output ./publish
+      
+    - name: Deploy to Azure App Service
+      if: github.ref == 'refs/heads/main'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish

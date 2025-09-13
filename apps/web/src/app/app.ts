@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './components/shared/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
+  imports: [RouterOutlet, NavbarComponent],
+  template: `
+    <div class="min-h-screen bg-gray-50">
+      <app-navbar></app-navbar>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  `,
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('web');
+  protected readonly title = 'SaaS Platform';
 }
